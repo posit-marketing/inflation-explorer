@@ -1,0 +1,163 @@
+---
+title: "BLS CPI Data Pull"
+format: html
+---
+
+## BLS API Access
+
+```{python}
+import requests
+import json
+import pandas as pd
+import pins
+from pins import board_connect
+
+from dotenv import load_dotenv
+load_dotenv()
+import os 
+
+# BLS API Key obtained at https://www.bls.gov/developers/home.htm
+bls_key = os.environ.get('BLS_KEY')
+
+class c_bls_data_api:
+    
+    """
+        File name:      c_bls_data_api.py
+        Class name:     c_bls_data_api
+        Author:         Originally by Randy Runtsch, adapted by Isabella Velásquez
+        Date:           October 24, 2023
+        Description:    Call BLS Data API with a query and handle the results.
+        Reference:      https://www.bls.gov/developers/api_python.htm
+    """
+
+    def __init__(self, parameters):
+        self.data = self.get_report(parameters)
+
+    def get_report(self, parameters):
+        headers = {'Content-type': 'application/json'}
+        response = requests.post('https://api.bls.gov/publicAPI/v2/timeseries/data/', data = parameters, headers = headers)
+        
+        if response.status_code != 200:
+            raise Exception(f'API Error: {response.status_code}')
+
+        return response.json()
+```
+
+## Tables
+
+List of table IDs to pull obtained at https://data.bls.gov/cgi-bin/surveymost
+
+```{python}
+table_ids = ['CUUR0000SA0', 'CUUR0000SA0L1E', 'CUUR0000SAF1', 'CUUR0000SA0E', 'CUUR0000SETB01', 'CUUR0000SAM', 'CUUR0000SEMC01', 'CUUR0000SEMD01', 'CUUR0000SEMF01', 'CUUR0000SAH1']
+
+id_to_label = {
+    'CUUR0000SA0': 'All groups CPI',
+    'CUUR0000SA0L1E': 'All items less food and energy',
+    'CUUR0000SAF1': 'Food',
+    'CUUR0000SA0E': 'Energy',
+    'CUUR0000SETB01': 'Gasoline',
+    'CUUR0000SAM': 'Medical care',
+    'CUUR0000SEMC01': "Physicians' services",
+    'CUUR0000SEMD01': 'Hospital services',
+    'CUUR0000SEMF01': 'Prescription drugs',
+    'CUUR0000SAH1': 'Shelter'
+}
+```
+
+## Get data
+
+```{python}
+#| eval: false
+#| include: false
+# Empty dictionary to store all the data
+all_data = {}
+
+# Call c_bls_data_api.py with a request for CPI data from 2018 through 2024
+# and the name of the file to store the returned JSON data structure in.
+
+print('Program started.')
+
+# Set the register, series ID for CPI, start year, end year, and calculations. Note that setting calculations to true
+# returns CPI percentages as well as the raw CPI.
+
+for table_id in table_ids:
+    bls_key = os.environ.get('BLS_KEY')
+    parameters = json.dumps({
+        'registrationkey': bls_key,
+        'seriesid': [table_id],
+        'startyear': '2018',
+        'endyear': '2024',
+        'calculations': 'true'
+    })
+
+    bls_data_object = c_bls_data_api(parameters)
+    
+    all_data[table_id] = bls_data_object.data
+
+with open('/Users/ivelasq/Python/python-geospatial-maps/all_data_report.json', 'w') as f:
+    json.dump(all_data, f, indent=6)
+
+print('Program completed.')
+```
+
+## Create data frame
+
+```{python}
+with open('/Users/ivelasq/Python/python-geospatial-maps/all_data_report.json', 'r') as f:
+    data = json.load(f)
+
+print('Loaded JSON data')
+
+dfs = [] 
+for key, series in data.items():
+    try:
+        series_data = series['Results']['series'][0]['data']
+        df_temp = pd.DataFrame(series_data)
+        df_temp['Category'] = key
+        dfs.append(df_temp)
+    except KeyError:
+        print(f'Proper keys not found for: {key}')
+
+df = pd.concat(dfs, ignore_index=True)
+
+df['Year-Month'] = df['year'] + '-' + df['period'].str[1:]
+
+df['value'] = pd.to_numeric(df['value'], errors='coerce')
+
+df['Category_Label'] = df['Category'].map(id_to_label)
+```
+
+## Transform data
+
+```{python}
+df['Year-Month'] = pd.to_datetime(df['Year-Month'])
+
+january_2018_data = df[(df['Year-Month'].dt.year == 2018) & (df['Year-Month'].dt.month == 1)]
+
+january_2018_values = dict(zip(january_2018_data['Category_Label'], january_2018_data['value']))
+
+df['Value_January_2018'] = df['Category_Label'].map(january_2018_values)
+df['Difference_from_January_2018'] = df['value'] - df['Value_January_2018']
+
+df['Percent_Change_from_January_2018'] = 0
+for category_label in january_2018_values.keys():
+    df.loc[df['Category_Label'] == category_label, 'Percent_Change_from_January_2018'] = \
+        (df.loc[df['Category_Label'] == category_label, 'Difference_from_January_2018'] / \
+         january_2018_values[category_label]) * 100
+
+# Reset the index (optional)
+df = df.reset_index(drop=True)
+```
+
+## Save as a pin
+
+```{python}
+connect_server = 'https://colorado.posit.co/rsc'
+connect_api_key = os.environ.get('CONNECT_API_KEY')
+```
+
+```{python}
+board = board_connect(server_url=connect_server, api_key=connect_api_key)
+
+board.pin_write(df, "isabella.velasquez/bls-cpi-data", type="csv")
+```

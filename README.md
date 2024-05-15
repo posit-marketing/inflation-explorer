@@ -1,1 +1,1 @@
-# inflation-explorer
+# Inflation Explorer

@@ -1,0 +1,4 @@
+- source: project
+  connect:
+    - id: a73e16e2-5a38-49d5-8998-3583a9c01756
+      url: 'https://colorado.posit.co/rsc/content/a73e16e2-5a38-49d5-8998-3583a9c01756/'

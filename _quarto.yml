@@ -1,0 +1,5 @@
+project:
+  type: website
+  title: "inflation-dashboard"
+
+theme: [simplex, custom.scss]

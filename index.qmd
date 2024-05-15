@@ -1,0 +1,100 @@
+---
+title: "Inflation explorer: showing the change in price for various goods and services"
+format: 
+  dashboard:
+    logo: images/logo.png
+    nav-buttons:
+      - icon: github
+        href: https://github.com/posit-marketing
+---
+
+```{python}
+#| include: false
+import markdown
+import pins
+from pins import board_connect
+import pandas as pd
+import plotly.express as px
+import plotly.io as pio
+import altair as alt
+from dotenv import load_dotenv
+load_dotenv()
+import os 
+
+connect_server = "https://colorado.posit.co/rsc"
+connect_api_key = os.environ.get('CONNECT_API_KEY')
+
+board = board_connect(server_url=connect_server, api_key=connect_api_key)
+df = board.pin_read("isabella.velasquez/bls-cpi-data")
+
+pio.templates.default = "plotly_white"
+```
+
+## Row {height=20%}
+
+```{python}
+#| content: valuebox
+#| title: "Articles per day"
+#| icon: pencil
+#| color: #fff
+dict(
+  value = 0.1
+)
+```
+
+```{python}
+#| content: valuebox
+#| title: "Spam per day"
+#| icon: pencil
+#| color: primary
+dict(
+  value = 0.1
+)
+```
+
+```{python}
+#| content: valuebox
+#| title: "Comments per day"
+#| icon: pencil
+#| color: primary
+dict(
+  value = 0.1
+)
+```
+
+## Row {.tabset height=80%}
+
+```{python}
+#| include: false
+df = df.sort_values(by=['Category_Label', 'Year-Month'], ascending=[False, False])
+fig = px.line(df, x='Year-Month', y='Percent_Change_from_January_2018', color='Category_Label', hover_name='Category_Label')
+
+for d in fig['data']:
+    if d['name'] == 'All groups CPI':
+        d['line']['color'] = 'orange'
+        d['legendgroup'] = 1 
+    else:
+        d['line']['color'] = 'lightgrey'
+
+fig.update_xaxes(title_text='')
+fig.update_yaxes(title_text='')
+```
+
+```{python}
+df['Year-Month'] = pd.to_datetime(df['Year-Month'])
+last_updated_date = df['Year-Month'].max()
+last_updated_string = last_updated_date.strftime("%B  %Y")
+print("title=", f"Chart (Last Updated: {last_updated_string})")
+
+from IPython.display import display, Markdown, Latex
+display(Markdown('Use this inflation data explorer to see which goods and services are getting cheaper or more expensive in the U.S.'))
+
+fig.show()
+```
+
+```{python}
+#| title: "Table"
+from IPython.display import display, Markdown, Latex
+display(Markdown('Use this inflation data explorer to see which goods and services are getting cheaper or more expensive in the U.S.'))
+fig.show()
+```
