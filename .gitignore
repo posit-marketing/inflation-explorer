@@ -1,3 +1,5 @@
 /env/
 /.quarto/
 .env
+/_site/
+/index_files/

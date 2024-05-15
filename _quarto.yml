@@ -1,5 +1,5 @@
 project:
   type: website
-  title: "inflation-dashboard"
+  title: "Inflation explorer"
 
 theme: [simplex, custom.scss]

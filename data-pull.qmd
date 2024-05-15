@@ -6,6 +6,7 @@ format: html
 ## BLS API Access
 
 ```{python}
+#| label: setup
 import requests
 import json
 import pandas as pd
@@ -48,6 +49,7 @@ class c_bls_data_api:
 List of table IDs to pull obtained at https://data.bls.gov/cgi-bin/surveymost
 
 ```{python}
+#| label: tables-to-pull
 table_ids = ['CUUR0000SA0', 'CUUR0000SA0L1E', 'CUUR0000SAF1', 'CUUR0000SA0E', 'CUUR0000SETB01', 'CUUR0000SAM', 'CUUR0000SEMC01', 'CUUR0000SEMD01', 'CUUR0000SEMF01', 'CUUR0000SAH1']
 
 id_to_label = {
@@ -67,19 +69,12 @@ id_to_label = {
 ## Get data
 
 ```{python}
+#| label: empty-dictionary
 #| eval: false
 #| include: false
-# Empty dictionary to store all the data
 all_data = {}
 
-# Call c_bls_data_api.py with a request for CPI data from 2018 through 2024
-# and the name of the file to store the returned JSON data structure in.
-
 print('Program started.')
-
-# Set the register, series ID for CPI, start year, end year, and calculations. Note that setting calculations to true
-# returns CPI percentages as well as the raw CPI.
-
 for table_id in table_ids:
     bls_key = os.environ.get('BLS_KEY')
     parameters = json.dumps({
@@ -94,7 +89,7 @@ for table_id in table_ids:
     
     all_data[table_id] = bls_data_object.data
 
-with open('/Users/ivelasq/Python/python-geospatial-maps/all_data_report.json', 'w') as f:
+with open('/Users/ivelasq/Python/inflation-explorer/all_data_report.json', 'w') as f:
     json.dump(all_data, f, indent=6)
 
 print('Program completed.')
@@ -103,7 +98,8 @@ print('Program completed.')
 ## Create data frame
 
 ```{python}
-with open('/Users/ivelasq/Python/python-geospatial-maps/all_data_report.json', 'r') as f:
+#| label: create-data-frame
+with open('/Users/ivelasq/Python/inflation-explorer/all_data_report.json', 'r') as f:
     data = json.load(f)
 
 print('Loaded JSON data')
@@ -130,6 +126,7 @@ df['Category_Label'] = df['Category'].map(id_to_label)
 ## Transform data
 
 ```{python}
+#| label: calculate-columns
 df['Year-Month'] = pd.to_datetime(df['Year-Month'])
 
 january_2018_data = df[(df['Year-Month'].dt.year == 2018) & (df['Year-Month'].dt.month == 1)]
@@ -145,18 +142,19 @@ for category_label in january_2018_values.keys():
         (df.loc[df['Category_Label'] == category_label, 'Difference_from_January_2018'] / \
          january_2018_values[category_label]) * 100
 
-# Reset the index (optional)
 df = df.reset_index(drop=True)
 ```
 
 ## Save as a pin
 
 ```{python}
+#| label: connect-setup
 connect_server = 'https://colorado.posit.co/rsc'
 connect_api_key = os.environ.get('CONNECT_API_KEY')
 ```
 
 ```{python}
+#| label: save-pin
 board = board_connect(server_url=connect_server, api_key=connect_api_key)
 
 board.pin_write(df, "isabella.velasquez/bls-cpi-data", type="csv")
