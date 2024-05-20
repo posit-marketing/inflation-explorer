@@ -19,7 +19,8 @@ import plotly.io as pio
 import altair as alt
 from dotenv import load_dotenv
 load_dotenv()
-import os 
+import os
+from IPython.display import display, Markdown, Latex
 
 connect_server = "https://colorado.posit.co/rsc"
 connect_api_key = os.environ.get('CONNECT_API_KEY')
@@ -31,8 +32,7 @@ pio.templates.default = "plotly_white"
 
 # Value for last updated date
 df['Year-Month'] = pd.to_datetime(df['Year-Month'])
-last_updated_date = df['Year-Month'].max()
-last_updated_string = last_updated_date
+last_updated_date = df['Year-Month'].max().strftime("%B  %Y")
 
 cpi_df = df[df['Category'] == 'CUUR0000SA0']
 latest_cpi_value = cpi_df['value'].iloc[-1]
@@ -45,7 +45,7 @@ latest_cpi_percent_change = cpi_df['Percent_Change_from_Previous_Month'].iloc[-1
 #| content: valuebox
 #| title: "Last updated"
 #| color: #fff
-latest_cpi_value.round()
+last_updated_date
 ```
 
 ```{python}
@@ -54,7 +54,7 @@ latest_cpi_value.round()
 #| icon: basket
 #| color: primary
 dict(
-  value = latest_cpi_value
+  value = latest_cpi_value.round(2)
 )
 ```
 
@@ -88,7 +88,6 @@ fig.update_yaxes(title_text='')
 
 ```{python}
 #| title: "Chart"
-from IPython.display import display, Markdown, Latex
 display(Markdown('Use this inflation data explorer to see which goods and services are getting cheaper or more expensive in the U.S.'))
 
 fig.show()
