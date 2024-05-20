@@ -1,5 +1,5 @@
 ---
-title: "BLS CPI Data Pull"
+title: 'BLS CPI Data Pull'
 format: html
 ---
 
@@ -127,6 +127,8 @@ df['Category_Label'] = df['Category'].map(id_to_label)
 
 ```{python}
 #| label: calculate-columns
+
+# Calculate change from January 2018
 df['Year-Month'] = pd.to_datetime(df['Year-Month'])
 
 january_2018_data = df[(df['Year-Month'].dt.year == 2018) & (df['Year-Month'].dt.month == 1)]
@@ -143,6 +145,12 @@ for category_label in january_2018_values.keys():
          january_2018_values[category_label]) * 100
 
 df = df.reset_index(drop=True)
+
+# Calculate change from previous month
+df = df.sort_values(by='Year-Month')
+grouped = df.groupby('Category_Label')
+df['Percent_Change_from_Previous_Month'] = grouped['value'].pct_change() * 100
+df = df.reset_index(drop=True)
 ```
 
 ## Save as a pin
@@ -156,6 +164,5 @@ connect_api_key = os.environ.get('CONNECT_API_KEY')
 ```{python}
 #| label: save-pin
 board = board_connect(server_url=connect_server, api_key=connect_api_key)
-
-board.pin_write(df, "isabella.velasquez/bls-cpi-data", type="csv")
+board.pin_write(df, 'isabella.velasquez/bls-cpi-data', type='csv')
 ```

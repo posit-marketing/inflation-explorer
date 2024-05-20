@@ -28,37 +28,43 @@ board = board_connect(server_url=connect_server, api_key=connect_api_key)
 df = board.pin_read("isabella.velasquez/bls-cpi-data")
 
 pio.templates.default = "plotly_white"
+
+# Value for last updated date
+df['Year-Month'] = pd.to_datetime(df['Year-Month'])
+last_updated_date = df['Year-Month'].max()
+last_updated_string = last_updated_date
+
+cpi_df = df[df['Category'] == 'CUUR0000SA0']
+latest_cpi_value = cpi_df['value'].iloc[-1]
+latest_cpi_percent_change = cpi_df['Percent_Change_from_Previous_Month'].iloc[-1]
 ```
 
 ## Row {height=20%}
 
 ```{python}
 #| content: valuebox
-#| title: "Articles per day"
-#| icon: pencil
+#| title: "Last updated"
 #| color: #fff
+latest_cpi_value.round()
+```
+
+```{python}
+#| content: valuebox
+#| title: "Consumer Price Index (CPI)"
+#| icon: basket
+#| color: primary
 dict(
-  value = 0.1
+  value = latest_cpi_value
 )
 ```
 
 ```{python}
 #| content: valuebox
-#| title: "Spam per day"
-#| icon: pencil
+#| title: "Increase from previous month"
+#| icon: percent
 #| color: primary
 dict(
-  value = 0.1
-)
-```
-
-```{python}
-#| content: valuebox
-#| title: "Comments per day"
-#| icon: pencil
-#| color: primary
-dict(
-  value = 0.1
+  value = latest_cpi_percent_change.round(2)
 )
 ```
 
@@ -81,11 +87,7 @@ fig.update_yaxes(title_text='')
 ```
 
 ```{python}
-df['Year-Month'] = pd.to_datetime(df['Year-Month'])
-last_updated_date = df['Year-Month'].max()
-last_updated_string = last_updated_date.strftime("%B  %Y")
-print("title=", f"Chart (Last Updated: {last_updated_string})")
-
+#| title: "Chart"
 from IPython.display import display, Markdown, Latex
 display(Markdown('Use this inflation data explorer to see which goods and services are getting cheaper or more expensive in the U.S.'))
 
