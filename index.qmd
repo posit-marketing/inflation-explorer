@@ -1,5 +1,5 @@
 ---
-title: "Inflation explorer: showing the change in price for various goods and services"
+title: 'Inflation explorer: showing the change in price for various goods and services'
 format: 
   dashboard:
     logo: images/logo.png
@@ -22,13 +22,13 @@ load_dotenv()
 import os
 from IPython.display import display, Markdown, Latex
 
-connect_server = "https://colorado.posit.co/rsc"
+connect_server = 'https://colorado.posit.co/rsc'
 connect_api_key = os.environ.get('CONNECT_API_KEY')
 
 board = board_connect(server_url=connect_server, api_key=connect_api_key)
-df = board.pin_read("isabella.velasquez/bls-cpi-data")
+df = board.pin_read('isabella.velasquez/bls-cpi-data')
 
-pio.templates.default = "plotly_white"
+pio.templates.default = 'plotly_white'
 
 # Value for last updated date
 df['Year-Month'] = pd.to_datetime(df['Year-Month'])
@@ -43,14 +43,14 @@ latest_cpi_percent_change = cpi_df['Percent_Change_from_Previous_Month'].iloc[-1
 
 ```{python}
 #| content: valuebox
-#| title: "Last updated"
+#| title: 'Last updated'
 #| color: #fff
 last_updated_date
 ```
 
 ```{python}
 #| content: valuebox
-#| title: "Consumer Price Index (CPI)"
+#| title: 'Consumer Price Index (CPI)'
 #| icon: basket
 #| color: primary
 dict(
@@ -68,11 +68,23 @@ dict(
 )
 ```
 
-## Row {.tabset height=80%}
+## Row {height=80%}
+
+### Column {width=20%}
+
+The **Consumer Price Index (CPI)** is a measure of the average change over time in the prices paid by urban consumers for a market basket of consumer goods and services. 
+
+Indexes are available for the U.S. and various geographic areas. Average price data for select utility, automotive fuel, and food items are also available.
+
+Source: Bureau of Labor Statistics
+
+### Column {.tabset width=80%}
 
 ```{python}
+#| label: pct-change-jan-2018-code
 #| include: false
 df = df.sort_values(by=['Category_Label', 'Year-Month'], ascending=[False, False])
+
 fig = px.line(df, x='Year-Month', y='Percent_Change_from_January_2018', color='Category_Label', hover_name='Category_Label')
 
 for d in fig['data']:
@@ -87,15 +99,34 @@ fig.update_yaxes(title_text='')
 ```
 
 ```{python}
-#| title: "Chart"
+#| label: pct-change-jan-2018-plot
+#| title: "Percentage change since Jan 2018"
 display(Markdown('Use this inflation data explorer to see which goods and services are getting cheaper or more expensive in the U.S.'))
 
 fig.show()
 ```
 
 ```{python}
-#| title: "Table"
-from IPython.display import display, Markdown, Latex
-display(Markdown('Use this inflation data explorer to see which goods and services are getting cheaper or more expensive in the U.S.'))
+#| label: pct-change-monthly-code
+#| include: false
+latest_month_data = df[df['Year-Month'] == df['Year-Month'].max()]
+
+latest_month_data_sorted = latest_month_data.sort_values(by='Percent_Change_from_Previous_Month', ascending=False)
+
+top_six_categories = latest_month_data_sorted.head(6)
+
+fig = px.bar(top_six_categories, x='Category_Label', y='Percent_Change_from_Previous_Month', 
+             title='',
+             color='Category_Label',
+             color_discrete_sequence=px.colors.sequential.Reds[::-1])
+
+fig.update_layout(xaxis_title='', yaxis_title='Percent Change',
+                  yaxis_tickformat='%.1f%%')
+```
+
+```{python}
+#| label: pct-change-monthly-plot
+#| title: '12-month percentage change'
+display(Markdown('Percentage change in CPI by category for the latest month, top six categories'))
 fig.show()
 ```

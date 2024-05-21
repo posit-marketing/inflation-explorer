@@ -1,28 +1,11 @@
 /*-- scss:defaults --*/
 
-.quarto-dashboard-header {
-    height: 400px !important;
-}
-
 .value-box-title {
     font-size: 0.8rem !important;
 }
 
-.quarto-dashboard .bslib-value-box .value-box-area {
-    margin-top: -0.3rem !important;
-}
-
-.bslib-card .card-body p {
-    margin-top: -0.3rem !important;
-}
-
 .quarto-dashboard .bslib-value-box .value-box-value {
     font-size: clamp(.1em,10cqw,3em) !important;
-}
-
-.bslib-grid {
-    grid-template-rows: minmax(3em, 15fr) minmax(3em, 80fr) !important;
-    font-size: 16px;
 }
 
 .quarto-dashboard .card.valuebox, .quarto-dashboard .card.bslib-value-box {
