@@ -20,6 +20,7 @@ import altair as alt
 from dotenv import load_dotenv
 load_dotenv()
 import os
+from plotnine import ggplot, aes, geom_bar, scale_fill_manual, labs, theme_minimal, theme, element_text
 from IPython.display import display, Markdown, Latex
 
 connect_server = 'https://colorado.posit.co/rsc'
@@ -32,7 +33,7 @@ pio.templates.default = 'plotly_white'
 
 # Value for last updated date
 df['Year-Month'] = pd.to_datetime(df['Year-Month'])
-last_updated_date = df['Year-Month'].max().strftime("%B  %Y")
+last_updated_date = df['Year-Month'].max().strftime('%B  %Y')
 
 cpi_df = df[df['Category'] == 'CUUR0000SA0']
 latest_cpi_value = cpi_df['value'].iloc[-1]
@@ -60,7 +61,7 @@ dict(
 
 ```{python}
 #| content: valuebox
-#| title: "Increase from previous month"
+#| title: 'Increase from previous month'
 #| icon: percent
 #| color: primary
 dict(
@@ -76,7 +77,9 @@ The **Consumer Price Index (CPI)** is a measure of the average change over time 
 
 Indexes are available for the U.S. and various geographic areas. Average price data for select utility, automotive fuel, and food items are also available.
 
-Source: Bureau of Labor Statistics
+Source: 
+
+Bureau of Labor Statistics
 
 ### Column {.tabset width=80%}
 
@@ -100,7 +103,7 @@ fig.update_yaxes(title_text='')
 
 ```{python}
 #| label: pct-change-jan-2018-plot
-#| title: "Percentage change since Jan 2018"
+#| title: 'Percentage change since Jan 2018'
 display(Markdown('Use this inflation data explorer to see which goods and services are getting cheaper or more expensive in the U.S.'))
 
 fig.show()
@@ -126,7 +129,13 @@ fig.update_layout(xaxis_title='', yaxis_title='Percent Change',
 
 ```{python}
 #| label: pct-change-monthly-plot
-#| title: '12-month percentage change'
+#| title: "Last month's top 6"
 display(Markdown('Percentage change in CPI by category for the latest month, top six categories'))
 fig.show()
+```
+
+
+```{python}
+#| title: 'Monthly percentage change'
+display(Markdown('Use this inflation data explorer to see which goods and services are getting cheaper or more expensive in the U.S.'))
 ```

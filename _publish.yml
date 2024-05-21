@@ -2,3 +2,5 @@
   connect:
     - id: a73e16e2-5a38-49d5-8998-3583a9c01756
       url: 'https://colorado.posit.co/rsc/content/a73e16e2-5a38-49d5-8998-3583a9c01756/'
+    - id: 92c6f657-3ff4-4925-a5fb-85fe5e83b4ad
+      url: 'https://inescapable-oyster.staging.eval.posit.co/pub/content/92c6f657-3ff4-4925-a5fb-85fe5e83b4ad/'

@@ -17,6 +17,9 @@ from dotenv import load_dotenv
 load_dotenv()
 import os 
 
+current_dir = os.getcwd()
+file_path = os.path.join(current_dir, 'all_data_report.json')
+
 # BLS API Key obtained at https://www.bls.gov/developers/home.htm
 bls_key = os.environ.get('BLS_KEY')
 
@@ -70,8 +73,6 @@ id_to_label = {
 
 ```{python}
 #| label: empty-dictionary
-#| eval: false
-#| include: false
 all_data = {}
 
 print('Program started.')
@@ -89,7 +90,7 @@ for table_id in table_ids:
     
     all_data[table_id] = bls_data_object.data
 
-with open('/Users/ivelasq/Python/inflation-explorer/all_data_report.json', 'w') as f:
+with open(file_path, 'w') as f:
     json.dump(all_data, f, indent=6)
 
 print('Program completed.')
@@ -99,7 +100,7 @@ print('Program completed.')
 
 ```{python}
 #| label: create-data-frame
-with open('/Users/ivelasq/Python/inflation-explorer/all_data_report.json', 'r') as f:
+with open(file_path, 'r') as f:
     data = json.load(f)
 
 print('Loaded JSON data')
