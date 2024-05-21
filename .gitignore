@@ -3,3 +3,4 @@
 .env
 /_site/
 /index_files/
+*.html

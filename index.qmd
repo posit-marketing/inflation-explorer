@@ -36,16 +36,20 @@ pio.templates.default = "plotly_white"
 df["Year-Month"] = pd.to_datetime(df["Year-Month"])
 last_updated_date = df["Year-Month"].max().strftime("%B  %Y")
 
-cpi_df = df[df["Category"] == "CUUR0000SA0"]
+# Value for the percentage change from the previous month
+cpi_df = df[df["Category"] == "CUUR0000SA0"] # All groups
 latest_cpi_value = cpi_df["value"].iloc[-1]
 latest_cpi_percent_change = cpi_df["Percent_Change_from_Previous_Month"].iloc[-1]
 
+# Reformatted data for display table
 pivot_df = df.pivot_table(
     index="Category_Label",
-    columns="periodName",
+    columns="Year-Month",
     values="Percent_Change_from_Previous_Month",
     aggfunc="first",
 )
+pivot_df = pivot_df.iloc[:, -5:].iloc[:, ::-1]
+pivot_df.columns = [pd.to_datetime(col).strftime('%B %Y') for col in pivot_df.columns]
 pivot_df.reset_index(inplace=True)
 pivot_df.columns.name = None
 ```
@@ -168,13 +172,13 @@ fig.show()
 ```
 
 ```{python}
-#| pct-change-monthly-table
+#| label: pct-change-monthly-table
 #| title: "Monthly changes in prices"
 (
     GT(pivot_df)
     .tab_header(
         title="Monthly changes in prices for various categories",
-        subtitle=md("**Seasonally adjusted**"),
+        subtitle=md("**Not seasonally adjusted**"),
     )
     .cols_label(Category_Label="")
     .data_color(
@@ -182,7 +186,6 @@ fig.show()
         palette=["orange", "white", "red"],
         na_color="white",
     )
-    .fmt_number(columns="April", decimals=2)
     .tab_source_note(source_note="Source: Bureau of Labor Statistics")
 )
 ```

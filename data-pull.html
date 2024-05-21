@@ -232,7 +232,9 @@ Program completed.</code></pre>
 <span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"value"</span>] <span class="op">=</span> pd.to_numeric(df[<span class="st">"value"</span>], errors<span class="op">=</span><span class="st">"coerce"</span>)</span>
 <span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"Category_Label"</span>] <span class="op">=</span> df[<span class="st">"Category"</span>].<span class="bu">map</span>(id_to_label)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"Category_Label"</span>] <span class="op">=</span> df[<span class="st">"Category"</span>].<span class="bu">map</span>(id_to_label)</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Year-Month'</span>] <span class="op">=</span> df[<span class="st">'year'</span>].astype(<span class="bu">str</span>) <span class="op">+</span> <span class="st">'-'</span> <span class="op">+</span> df[<span class="st">'periodName'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Loaded JSON data</code></pre>
 </div>
@@ -272,7 +274,11 @@ Program completed.</code></pre>
 <span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"Percent_Change_from_Previous_Month"</span>] <span class="op">=</span> grouped[<span class="st">"value"</span>].pct_change() <span class="op">*</span> <span class="dv">100</span></span>
 <span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.reset_index(drop<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>/tmp/ipykernel_97161/1387877534.py:17: FutureWarning:
+<pre><code>/tmp/ipykernel_101879/1387877534.py:2: UserWarning:
+
+Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+
+/tmp/ipykernel_101879/1387877534.py:17: FutureWarning:
 
 Setting an item of incompatible dtype is deprecated and will raise in a future error of pandas. Value '[26.49848507 26.0078994  25.19859441 24.42842331 23.75427144 23.87732131
  24.12745545 24.17506163 23.86723525 23.32863996 23.09383661 22.6976564
@@ -303,10 +309,10 @@ Setting an item of incompatible dtype is deprecated and will raise in a future e
 <div class="cell-output cell-output-stderr">
 <pre><code>Writing pin:
 Name: 'isabella.velasquez/bls-cpi-data'
-Version: 20240521T201646Z-63569</code></pre>
+Version: 20240521T203633Z-63569</code></pre>
 </div>
-<div id="save-pin" class="cell-output cell-output-display" data-execution_count="42">
-<pre><code>Meta(title='bls-cpi-data: a pinned 759 x 14 DataFrame', description=None, created='20240521T201646Z', pin_hash='635698bb3e0e8d2b', file='bls-cpi-data.csv', file_size=168199, type='csv', api_version=1, version=VersionRaw(version='114329'), tags=None, name='isabella.velasquez/bls-cpi-data', user={}, local={})</code></pre>
+<div id="save-pin" class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>Meta(title='bls-cpi-data: a pinned 759 x 14 DataFrame', description=None, created='20240521T203633Z', pin_hash='635698bb3e0e8d2b', file='bls-cpi-data.csv', file_size=168199, type='csv', api_version=1, version=VersionRaw(version='114330'), tags=None, name='isabella.velasquez/bls-cpi-data', user={}, local={})</code></pre>
 </div>
 </div>
 </section>

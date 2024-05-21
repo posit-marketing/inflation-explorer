@@ -141,6 +141,8 @@ df["Year-Month"] = df["year"] + "-" + df["period"].str[1:]
 df["value"] = pd.to_numeric(df["value"], errors="coerce")
 
 df["Category_Label"] = df["Category"].map(id_to_label)
+
+df['Year-Month'] = df['year'].astype(str) + '-' + df['periodName']
 ```
 
 ## Transform data
