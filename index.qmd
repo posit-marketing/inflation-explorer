@@ -5,7 +5,7 @@ format:
     logo: images/logo.png
     nav-buttons:
       - icon: github
-        href: https://github.com/posit-marketing
+        href: https://github.com/posit-marketing/inflation-explorer
 ---
 
 ```{python}

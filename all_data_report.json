@@ -1,7 +1,7 @@
 {
       "CUUR0000SA0": {
             "status": "REQUEST_SUCCEEDED",
-            "responseTime": 151,
+            "responseTime": 310,
             "message": [],
             "Results": {
                   "series": [
@@ -1384,7 +1384,7 @@
       },
       "CUUR0000SA0L1E": {
             "status": "REQUEST_SUCCEEDED",
-            "responseTime": 154,
+            "responseTime": 158,
             "message": [],
             "Results": {
                   "series": [
@@ -2767,7 +2767,7 @@
       },
       "CUUR0000SAF1": {
             "status": "REQUEST_SUCCEEDED",
-            "responseTime": 179,
+            "responseTime": 164,
             "message": [],
             "Results": {
                   "series": [
@@ -4150,7 +4150,7 @@
       },
       "CUUR0000SA0E": {
             "status": "REQUEST_SUCCEEDED",
-            "responseTime": 171,
+            "responseTime": 163,
             "message": [],
             "Results": {
                   "series": [
@@ -5533,7 +5533,7 @@
       },
       "CUUR0000SETB01": {
             "status": "REQUEST_SUCCEEDED",
-            "responseTime": 162,
+            "responseTime": 153,
             "message": [],
             "Results": {
                   "series": [
@@ -6916,7 +6916,7 @@
       },
       "CUUR0000SAM": {
             "status": "REQUEST_SUCCEEDED",
-            "responseTime": 166,
+            "responseTime": 244,
             "message": [],
             "Results": {
                   "series": [
@@ -8299,7 +8299,7 @@
       },
       "CUUR0000SEMC01": {
             "status": "REQUEST_SUCCEEDED",
-            "responseTime": 156,
+            "responseTime": 153,
             "message": [],
             "Results": {
                   "series": [
@@ -9682,7 +9682,7 @@
       },
       "CUUR0000SEMD01": {
             "status": "REQUEST_SUCCEEDED",
-            "responseTime": 227,
+            "responseTime": 155,
             "message": [],
             "Results": {
                   "series": [
@@ -11043,7 +11043,7 @@
       },
       "CUUR0000SEMF01": {
             "status": "REQUEST_SUCCEEDED",
-            "responseTime": 159,
+            "responseTime": 150,
             "message": [],
             "Results": {
                   "series": [
@@ -12426,7 +12426,7 @@
       },
       "CUUR0000SAH1": {
             "status": "REQUEST_SUCCEEDED",
-            "responseTime": 163,
+            "responseTime": 159,
             "message": [],
             "Results": {
                   "series": [
