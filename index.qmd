@@ -1,5 +1,5 @@
 ---
-title: 'Inflation explorer: showing the change in price for various goods and services'
+title: "Inflation explorer: showing the change in price for various goods and services"
 format: 
   dashboard:
     logo: images/logo.png

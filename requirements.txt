@@ -50,7 +50,7 @@ patsy==0.5.6
 pexpect==4.8.0
 pickleshare==0.7.5
 pillow==10.3.0
-pins==0.8.6
+pins @ git+https://github.com/rstudio/pins-python@74222f5d4570421e570d8a42b3f013ece2f3b61b
 platformdirs==3.11.0
 plotly==5.17.0
 plotnine==0.13.6
