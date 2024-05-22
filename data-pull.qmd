@@ -1,5 +1,5 @@
 ---
-title: "BLS CPI Data Pull"
+title: 'BLS CPI Data Pull'
 format: html
 ---
 
