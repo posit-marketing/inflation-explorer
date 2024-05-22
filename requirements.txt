@@ -54,7 +54,7 @@ pins @ git+https://github.com/rstudio/pins-python@74222f5d4570421e570d8a42b3f013
 platformdirs==3.11.0
 plotly==5.17.0
 plotnine==0.13.6
-prompt-toolkit==3.0.39
+prompt-toolkit==3.0.41
 psutil==5.9.6
 ptyprocess==0.7.0
 pure-eval==0.2.2
