@@ -1,14 +1,16 @@
----
-title: 'Inflation explorer: showing the change in price for various goods and services'
-format: 
-  dashboard:
-    logo: images/logo.png
-    nav-buttons:
-      - icon: github
-        href: https://github.com/posit-marketing
----
-
-```{python}
+# type: ignore
+# flake8: noqa
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #| label: setup
 #| include: false
 import markdown
@@ -52,19 +54,19 @@ pivot_df = pivot_df.iloc[:, -5:].iloc[:, ::-1]
 pivot_df.columns = [pd.to_datetime(col).strftime('%B %Y') for col in pivot_df.columns]
 pivot_df.reset_index(inplace=True)
 pivot_df.columns.name = None
-```
-
-## Row {height=20%}
-
-```{python}
+#
+#
+#
+#
+#
 #| label: valuebox1
 #| content: valuebox
 #| title: "Last updated"
 #| color: #fff
 last_updated_date
-```
-
-```{python}
+#
+#
+#
 #| label: valuebox2
 #| content: valuebox
 #| title: "Consumer Price Index (CPI)"
@@ -73,9 +75,9 @@ last_updated_date
 dict(
   value=latest_cpi_value.round(2)
   )
-```
-
-```{python}
+#
+#
+#
 #| label: valuebox3
 #| content: valuebox
 #| title: "Increase from previous month"
@@ -84,23 +86,23 @@ dict(
 dict(
   value = latest_cpi_percent_change.round(2)
   )
-```
-
-## Row {height=80%}
-
-### Column {width=20%}
-
-The **Consumer Price Index (CPI)** is a measure of the average change over time in the prices paid by urban consumers for a market basket of consumer goods and services. 
-
-Indexes are available for the U.S. and various geographic areas. Average price data for select utility, automotive fuel, and food items are also available.
-
-Source: 
-
-Bureau of Labor Statistics
-
-### Column {.tabset width=80%}
-
-```{python}
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #| label: pct-change-jan-2018-code
 #| include: false
 df = df.sort_values(by=["Category_Label", "Year-Month"], ascending=[False, False])
@@ -122,9 +124,9 @@ for d in fig["data"]:
 
 fig.update_xaxes(title_text="")
 fig.update_yaxes(title_text="")
-```
-
-```{python}
+#
+#
+#
 #| label: pct-change-jan-2018-plot
 #| title: "Percentage change since Jan 2018"
 display(
@@ -133,9 +135,9 @@ display(
     )
 )
 fig.show()
-```
-
-```{python}
+#
+#
+#
 #| label: pct-change-monthly-code
 #| include: false
 latest_month_data = df[df["Year-Month"] == df["Year-Month"].max()]
@@ -158,9 +160,9 @@ fig = px.bar(
 fig.update_layout(
     xaxis_title="", yaxis_title="Percent Change", yaxis_tickformat="%.1f%%"
 )
-```
-
-```{python}
+#
+#
+#
 #| label: pct-change-monthly-plot
 #| title: "Last month's top 6"
 display(
@@ -169,9 +171,9 @@ display(
     )
 )
 fig.show()
-```
-
-```{python}
+#
+#
+#
 #| label: pct-change-monthly-table
 #| title: "Monthly changes in prices"
 column_names = pivot_df.columns.tolist()
@@ -194,4 +196,6 @@ column_names_except_first = column_names[1:]
     )
     .tab_source_note(source_note="Source: Bureau of Labor Statistics")
 )
-```
+#
+#
+#
