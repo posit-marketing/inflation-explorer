@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "locale": "en_US.UTF-8",
+  "metadata": {
+    "appmode": "quarto-static"
+  },
+  "quarto": {
+    "version": "1.4.340",
+    "engines": [
+      "jupyter"
+    ]
+  },
+  "python": {
+    "version": "3.10.12",
+    "package_manager": {
+      "name": "pip",
+      "version": "24.0",
+      "package_file": "requirements.txt"
+    }
+  },
+  "files": {
+    "requirements.txt": {
+      "checksum": "9b0346fd33742bac00a79b6b6fbeeac1"
+    },
+    "data-pull.qmd": {
+      "checksum": "bebf789c8991c78cebe7476d33185308"
+    }
+  }
+}

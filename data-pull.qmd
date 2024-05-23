@@ -1,5 +1,5 @@
 ---
-title: 'BLS CPI Data Pull'
+title: "BLS CPI Data Pull"
 format: html
 ---
 
@@ -185,12 +185,12 @@ df = df.reset_index(drop=True)
 
 ```{python}
 #| label: connect-setup
-connect_server = "https://colorado.posit.co/rsc"
+connect_server = "https://pub.demo.posit.team/"
 connect_api_key = os.environ.get("CONNECT_API_KEY")
 ```
 
 ```{python}
 #| label: save-pin
 board = board_connect(server_url=connect_server, api_key=connect_api_key)
-board.pin_write(df, "isabella.velasquez/bls-cpi-data", type="csv")
+board.pin_write(df, "isabella.velasquez@posit.co/bls-cpi-data", type="csv")
 ```

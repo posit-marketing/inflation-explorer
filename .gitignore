@@ -5,3 +5,4 @@
 /index_files/
 *.html
 *.ipynb
+.venv
