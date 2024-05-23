@@ -1,4 +1,2 @@
 project:
   title: "Inflation explorer"
-
-theme: [simplex, custom.scss]
