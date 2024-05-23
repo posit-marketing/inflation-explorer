@@ -185,12 +185,12 @@ df = df.reset_index(drop=True)
 
 ```{python}
 #| label: connect-setup
-connect_server = "https://pub.demo.posit.team/"
+connect_server = os.environ.get("CONNECT_SERVER")
 connect_api_key = os.environ.get("CONNECT_API_KEY")
 ```
 
 ```{python}
 #| label: save-pin
 board = board_connect(server_url=connect_server, api_key=connect_api_key)
-board.pin_write(df, "isabella.velasquez@posit.co/bls-cpi-data", type="csv")
+board.pin_write(df, "publisher1/bls-cpi-data", type="csv")
 ```
