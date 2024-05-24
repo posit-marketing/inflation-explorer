@@ -1,4 +1,4 @@
-# %% [markdown]
+ # %% [markdown]
 # ---
 # title: "Python script file"
 # ---
@@ -19,7 +19,7 @@ current_dir = os.getcwd()
 file_path = os.path.join(current_dir, "all_data_report.json")
 
 # BLS API Key obtained at https://www.bls.gov/developers/home.htm
-bls_key = os.environ.get("BLS_KEY")
+bls_key = os.environ.get("BLS_KEY") 
 
 
 class c_bls_data_api:
