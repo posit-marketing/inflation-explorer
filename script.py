@@ -158,4 +158,4 @@ connect_server = os.environ.get("CONNECT_SERVER")
 connect_api_key = os.environ.get("CONNECT_API_KEY")
 
 board = board_connect(server_url=connect_server, api_key=connect_api_key)
-board.pin_write(df, "publisher1/bls-cpi-data", type="csv")
+board.pin_write(df, "isabella.velasquez/bls-cpi-data", type="csv")

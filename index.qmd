@@ -29,7 +29,7 @@ connect_server = os.environ.get("CONNECT_SERVER")
 connect_api_key = os.environ.get("CONNECT_API_KEY")
 
 board = board_connect(server_url=connect_server, api_key=connect_api_key)
-df = board.pin_read("publisher1/bls-cpi-data")
+df = board.pin_read("isabella.velasquez/bls-cpi-data")
 
 pio.templates.default = "plotly_white"
 
