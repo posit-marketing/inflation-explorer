@@ -1,10 +1,12 @@
 # Inflation Explorer
 
-##  End-to-End Workflow with Posit Team presentation, May 2024
+##  End-to-End Workflow with Posit Team, May 2024
 
 *Automate your reporting with Quarto Dashboards and Posit Connect*
 
 Welcome to the GitHub repository for the project showcased in Posit's "End-to-End Workflow with Posit Team" webinar in May 2024. This project includes a Quarto dashboard that automatically updates monthly with the latest Consumer Price Index (CPI) data from the Bureau of Labor Statistics.
+
+![](images/final-dashboard.png)
 
 * [Event invite](https://pos.it/team-demo) - *Happening May 29, 2024 at 11am ET*
 * [Slides](https://colorado.posit.co/rsc/inflation-explorer-slides/)
