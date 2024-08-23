@@ -8,7 +8,7 @@ Welcome to the GitHub repository for the project showcased in Posit's "End-to-En
 
 ![](images/final-dashboard.png)
 
-* [Event invite](https://pos.it/team-demo) - *Happening May 29, 2024 at 11am ET*
+* [Video](https://www.youtube.com/watch?v=xnJuXOw7iu8) - *Happening May 29, 2024 at 11am ET*
 * [Slides](https://colorado.posit.co/rsc/inflation-explorer-slides/)
     * [GitHub Repo for Slides](https://github.com/ivelasq/automated-quarto-dashboards-slides)
 * [File structure](#file-structure)
